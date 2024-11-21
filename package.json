@@ -1,0 +1,27 @@
+{
+  "name": "zotero-obsidian-plugin",
+  "version": "0.0.1",
+  "description": "This is a plugin that adds some endpoints to Zotero client, so that it can be used locally, without the need of the Zotero API.",
+  "main": "/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubombar/zotero-obsidian-plugin.git"
+  },
+  "keywords": [
+    "zotero",
+    "obsidian",
+    "endpoint",
+    "javascript",
+    "document",
+    "plugin"
+  ],
+  "author": "Ufuk Bombar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ubombar/zotero-obsidian-plugin/issues"
+  },
+  "homepage": "https://github.com/ubombar/zotero-obsidian-plugin#readme"
+}
