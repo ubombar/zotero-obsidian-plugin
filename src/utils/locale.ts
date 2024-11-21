@@ -1,26 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { config } from "../../package.json";
 
-export { initLocale, getString };
+export { initLocale, getString, getLocaleID };
 
 /**
  * Initialize locale data
  */
 function initLocale() {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-	const l10n = new (
-		typeof Localization === "undefined"
-			? ztoolkit.getGlobal("Localization")
-			: Localization
-	)([`${config.addonRef}-addon.ftl`], true);
-	addon.data.locale = {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		current: l10n,
-	};
+  const l10n = new (
+    typeof Localization === "undefined"
+      ? ztoolkit.getGlobal("Localization")
+      : Localization
+  )([`${config.addonRef}-addon.ftl`], true);
+  addon.data.locale = {
+    current: l10n,
+  };
 }
 
 /**
@@ -49,41 +42,47 @@ function initLocale() {
 function getString(localString: string): string;
 function getString(localString: string, branch: string): string;
 function getString(
-	localeString: string,
-	options: { branch?: string | undefined; args?: Record<string, unknown> },
+  localeString: string,
+  options: { branch?: string | undefined; args?: Record<string, unknown> },
 ): string;
 function getString(...inputs: any[]) {
-	if (inputs.length === 1) {
-		return _getString(inputs[0]);
-	} else if (inputs.length === 2) {
-		if (typeof inputs[1] === "string") {
-			return _getString(inputs[0], { branch: inputs[1] });
-		} else {
-			return _getString(inputs[0], inputs[1]);
-		}
-	} else {
-		throw new Error("Invalid arguments");
-	}
+  if (inputs.length === 1) {
+    return _getString(inputs[0]);
+  } else if (inputs.length === 2) {
+    if (typeof inputs[1] === "string") {
+      return _getString(inputs[0], { branch: inputs[1] });
+    } else {
+      return _getString(inputs[0], inputs[1]);
+    }
+  } else {
+    throw new Error("Invalid arguments");
+  }
 }
 
 function _getString(
-	localeString: string,
-	options: {
-		branch?: string | undefined;
-		args?: Record<string, unknown>;
-	} = {},
+  localeString: string,
+  options: { branch?: string | undefined; args?: Record<string, unknown> } = {},
 ): string {
-	const localStringWithPrefix = `${config.addonRef}-${localeString}`;
-	const { branch, args } = options;
-	const pattern = addon.data.locale?.current.formatMessagesSync([
-		{ id: localStringWithPrefix, args },
-	])[0];
-	if (!pattern) {
-		return localStringWithPrefix;
-	}
-	if (branch && pattern.attributes) {
-		return pattern.attributes[branch] || localStringWithPrefix;
-	} else {
-		return pattern.value || localStringWithPrefix;
-	}
+  const localStringWithPrefix = `${config.addonRef}-${localeString}`;
+  const { branch, args } = options;
+  const pattern = addon.data.locale?.current.formatMessagesSync([
+    { id: localStringWithPrefix, args },
+  ])[0];
+  if (!pattern) {
+    return localStringWithPrefix;
+  }
+  if (branch && pattern.attributes) {
+    for (const attr of pattern.attributes) {
+      if (attr.name === branch) {
+        return attr.value;
+      }
+    }
+    return pattern.attributes[branch] || localStringWithPrefix;
+  } else {
+    return pattern.value || localStringWithPrefix;
+  }
+}
+
+function getLocaleID(id: string) {
+  return `${config.addonRef}-${id}`;
 }
