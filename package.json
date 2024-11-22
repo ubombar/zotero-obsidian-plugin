@@ -4,11 +4,11 @@
 	"description": "This is a plugin that adds some endpoints to Zotero client, so that it can be used locally, without the need of the Zotero API.",
 	"config": {
 		"addonName": "Zotero Obsidian Plugin",
-		"addonID": "zotero-obsidian-plugin",
-		"addonRef": "zotero-obsidian-plugin",
-		"addonInstance": "zoteroObsidianPlugin",
-		"prefsPrefix": "extensions.zotero.zotero-obsidian-plugin",
-		"releasePage": "https://github.com/Dominic-DallOsto/zotero-api-endpoint/releases"
+		"addonID": "zotero-obsidian-plugin@gmail.com",
+		"addonRef": "zoteroobsidianplugin",
+		"addonInstance": "ZoteroObsidianPlugin",
+		"prefsPrefix": "extensions.zotero.zoteroobsidianplugin",
+		"releasePage": "https://github.com/Dominic-DallOsto/zotero-api-endpoint/releases"    
 	},
   "repository": {
     "type": "git",
